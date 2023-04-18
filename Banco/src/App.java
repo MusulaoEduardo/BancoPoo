@@ -13,24 +13,23 @@ public class App {
 
         // Exibindo as informações das contas
         c1.Status();
-
         c2.Status();
         System.out.println();
 
+        System.out.println("TRANSFERENCIA");
         // Realizando uma transferência
         boolean transferencia = banco.transferir(c1.getNumero(), c2.getNumero(), 1000);
         banco.extrato(c1.getNumero(), c2.getNumero());
-        /*
-         * // Exibindo as informações atualizadas das contas
-         * System.out.println("Conta 1:");
-         * System.out.println("Proprietário: " + c1.getProprietario().getNome());
-         * System.out.println("Saldo: " + c1.getSaldo());
-         * 
-         * System.out.println("Conta 2:");
-         * System.out.println("Proprietário: " + c2.getProprietario().getNome());
-         * System.out.println("Saldo: " + c2.getSaldo());
-         */
+
         // Status das Contas
+
+        c1.depositar(1500);
+        System.out.println("Allan depositou $1500");
+        System.out.println();
+
+        System.out.println("TRANSFERENCIA");
+        transferencia = banco.transferir(c1.getNumero(), c2.getNumero(), 1000);
+
         System.out.println();
         System.out.println("Status");
         c1.Status();

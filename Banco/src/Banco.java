@@ -53,12 +53,15 @@ public class Banco {
             System.out.println("Valor: +" + valor);
             System.out.println();
             System.out.println("Transferência realizada com sucesso!");
+            System.out.println();
         } else {
             System.out.println("****************************************************************");
-            System.out.println(contOrg.getProprietario().getNome() +" não foi possível realizar a transferência,Saldo insuficiente.");
-            System.out.println("Saldo:"+contOrg.getSaldo());
-            System.out.println("Valor:"+valor);
+            System.out.println(contOrg.getProprietario().getNome()
+                    + " não foi possível realizar a transferência,Saldo insuficiente.");
+            System.out.println("Saldo:" + contOrg.getSaldo());
+            System.out.println("Valor:" + valor);
             System.out.println("****************************************************************");
+            System.out.println();
         }
 
         // Se as contas foram encontradas e o saldo da conta origem é suficiente, faz a
