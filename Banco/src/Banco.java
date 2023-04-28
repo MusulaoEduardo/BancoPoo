@@ -9,6 +9,10 @@ public class Banco {
         this.contas = new ArrayList<>();
     }
 
+    private Conta encontrarConta(double saldo) {
+        return null;
+    }
+
     public Conta criarConta(Pessoa proprietario, double saldo) {
         Conta conta = new Conta(proprietario, saldo);
         this.contas.add(conta);
@@ -23,9 +27,30 @@ public class Banco {
         return total;
     }
 
-    public void extrato(int numerocontOrg, int numerocontDest) {
+    // add depositar
+    public void extrato(int numeroConta) {
+        Conta conta = null;
+        // Procura a conta pelo número
+        for (Conta c : this.contas) {
+            if (c.getNumero() == numeroConta) {
+                conta = c;
+                break;
+            }
+        }
 
+        // Se a conta foi encontrada, imprime o extrato
+        if (conta != null) {
+            System.out.println("----- Extrato da Conta " + conta.getNumero() + " -----");
+            System.out.println("Data: " + new Date());
+            System.out.println("Descrição: Saldo anterior: " + conta.getSaldo());
+            System.out.println("Valor: " + conta.getSaldo());
+            System.out.println();
+        } else {
+            System.out.println("Conta não encontrada!");
+            System.out.println();
+        }
     }
+    // SACAR
 
     public boolean transferir(int numerocontOrg, int numerocontDest, double valor) {
         Conta contOrg = null;
@@ -39,21 +64,28 @@ public class Banco {
                 contDest = conta;
             }
         }
+        // extrato
+        /* */
         if (contOrg.getSaldo() >= valor) {
-            // extrato
-            System.out.println("----- Extrato da Conta " + contOrg.getNumero() + " -----");
+            // add no historico
+            contOrg.historico.add("Transferência para Conta " + valor);
+            contDest.historico.add("Transferência da Conta " + contOrg.getNumero() + ": +" + valor);
+
+            System.out.println("----- Transferencia da Conta " + contOrg.getNumero() + " -----");
             System.out.println("Data: " + new Date());
             System.out.println("Descrição: Transferência para a Conta " + contDest.getNumero());
             System.out.println("Valor: -" + valor);
             System.out.println();
 
-            System.out.println("----- Extrato da Conta " + contDest.getNumero() + " -----");
+            System.out.println("----- Transferencia da Conta " + contDest.getNumero() + " -----");
             System.out.println("Data: " + new Date());
             System.out.println("Descrição: Transferência da Conta " + contOrg.getNumero());
             System.out.println("Valor: +" + valor);
             System.out.println();
             System.out.println("Transferência realizada com sucesso!");
             System.out.println();
+
+            return true;
         } else {
             System.out.println("****************************************************************");
             System.out.println(contOrg.getProprietario().getNome()
@@ -62,16 +94,42 @@ public class Banco {
             System.out.println("Valor:" + valor);
             System.out.println("****************************************************************");
             System.out.println();
-        }
 
-        // Se as contas foram encontradas e o saldo da conta origem é suficiente, faz a
-        // transferência
-        if (contOrg != null && contDest != null && contOrg.sacar(valor)) {
-            contDest.depositar(valor);
-            return true;
-        } else {
             return false;
         }
 
     }
+
+    public boolean depositar(double valor, int idConta) {
+        Conta conta = encontrarConta(idConta);
+        for (Conta c : this.contas) {
+            if (c.getNumero() == idConta) {
+                conta = c;
+                break;
+            }
+        }
+        if (conta == null || valor <= 0) {
+            return false;
+        }
+        conta.historico.add("Depositou o valor de R$ " + valor);
+        conta.setSaldo(conta.getSaldo() + valor);
+        return true;
+    }
+
+    public boolean sacar(double valor, int idConta) {
+        Conta conta = encontrarConta(idConta);
+        for (Conta c : this.contas) {
+            if (c.getNumero() == idConta) {
+                conta = c;
+                break;
+            }
+        }
+        if (conta == null || valor <= 0) {
+            return false;
+        }
+        conta.historico.add("Sacou o valor de R$ " + valor);
+        conta.setSaldo(conta.getSaldo() - valor);
+        return true;
+    }
+
 }

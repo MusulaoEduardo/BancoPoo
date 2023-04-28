@@ -19,18 +19,17 @@ public class App {
         System.out.println("TRANSFERENCIA");
         // Realizando uma transferência
         boolean transferencia = banco.transferir(c1.getNumero(), c2.getNumero(), 1000);
-        banco.extrato(c1.getNumero(), c2.getNumero());
+        banco.extrato(c1.getNumero());
 
         // Status das Contas
 
-        c1.depositar(1500);
+        banco.depositar(1500, c1.getNumero());
         System.out.println("Allan depositou $1500");
         System.out.println();
 
         System.out.println("TRANSFERENCIA");
         transferencia = banco.transferir(c1.getNumero(), c2.getNumero(), 1000);
 
-        System.out.println();
         System.out.println("Status");
         c1.Status();
         c2.Status();
@@ -38,5 +37,12 @@ public class App {
         // Exibindo o total dos saldos do banco
         System.out.println("Total dos saldos: " + banco.somarSaldos());
 
+        banco.sacar(200, c1.getNumero());
+        c1.Status();
+
+        System.out.println("extrato");
+        c1.historico();
+
+        // HISTORICO TRANSFERECIA
     }
 }
